@@ -1,0 +1,1 @@
+web: gunicorn hotel_heroku.wsgi --log-file -
