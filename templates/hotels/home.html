@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+<!-- Overlay preloader-->
+<div class="htlfndr-loader-overlay"></div>
+
+<div class="htlfndr-wrapper">
+
+    <!-- Start of main content -->
+    <div class="container">
+        <!-- Progress steps -->
+        <div class="htlfndr-steps">
+            <ul class="htlfndr-progress">
+                <li class="htlfndr-active-step">
+                    <span class="htlfndr-step-number">1</span> <span class="htlfndr-step-description">home</span>
+                </li>
+                <li>
+                    <span class="htlfndr-step-number">2</span> <span class="htlfndr-step-description">hotel</span>
+                </li>
+                <li>
+                    <span class="htlfndr-step-number">3</span> <span class="htlfndr-step-description">book details</span>
+                </li>
+                <li>
+                    <span class="htlfndr-step-number">4</span> <span class="htlfndr-step-description">payment</span>
+                </li>
+            </ul>
+        </div><!-- .htlfndr-steps -->
+
+        <div class="row">
+
+            <main class="col-sm-12 col-md-12 col-lg-12 htlfndr-search-result htlfndr-grid-view" role="main">
+                <h2 class="htlfndr-search-result-title"><span>{{object_list.count}}</span> results found</h2>
+                <!-- Sorting navigation section -->
+                <div class="htlfndr-search-result-sorting row">
+                    <div class="col-md-12">
+
+                        <!-- Change number hotels_img to show -->
+                        <div class="dropdown htlfndr-show-number-hotels">
+                            <a aria-expanded="true" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown"
+                               id="htlfndr-sort-2" role="button">
+                                Show <span>9 items</span>
+                            </a>
+                            <ul aria-labelledby="htlfndr-sort-2" class="dropdown-menu">
+                                <li><a data-number="9" href="#" id="htlfndr-show-9">9 items</a></li>
+                                <li><a data-number="18" href="#" id="htlfndr-show-18">18 items</a></li>
+                                <li><a data-number="27" href="#" id="htlfndr-show-27">27 items</a></li>
+                            </ul>
+                        </div><!-- .dropdown .htlfndr-show-number-hotels_img -->
+
+                        <!-- Change view buttons -->
+                        <div class="htlfndr-view">
+                            <button class="htlfndr-active" data-placement="top" data-toggle="tooltip" id="htlfndr-grid"
+                                    role="button" title="Grid view">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                            <button data-placement="top" data-toggle="tooltip" id="htlfndr-row" role="button"
+                                    title="Row view">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </div><!-- .htlfndr-view -->
+
+                    </div><!-- .col-md-12 -->
+                </div><!-- .htlfndr-search-result-sorting .row -->
+
+                <section class="row htlfndr-search-result-content">
+
+                    {% for hotel in object_list %}
+                    <div class="col-md-4 htlfndr-hotel-post-wrapper">
+                        {% if hotel.discount_price %}
+                        <div class="htlfndr-hotel-post special-offer">
+                        {% else %}
+                        <div class="htlfndr-hotel-post">
+                        {% endif %}
+
+                        {% if hotel.hotelimage_set.all %}
+                        {% for img in hotel.hotelimage_set.all %}
+                        {% if img.featured %}
+                            <a class="htlfndr-hotel-thumbnail" href="{{ hotel.get_absolute_url }}">
+                                <img alt="pic" src="{{img.img}}" style="height:155px; width:360px"/>
+                            </a>
+                        {% endif %}
+                        {% endfor %}
+                        {% else %}
+                            <a class="htlfndr-hotel-thumbnail" href="{{ hotel.get_absolute_url }}">
+                                <img alt="default" src="http://127.0.0.1:8000/static/media/imghotel/default.jpg" style="height:155px; width:360px"/>
+                            </a>
+                        {% endif %}
+                            <div class="htlfndr-hotel-description">
+                                <div class="htlfndr-description-content">
+                                    <h2 class="htlfndr-entry-title"><a href="{{ hotel.get_absolute_url }}">{{ hotel.title }}</a>
+                                    </h2>
+                                    <div class="htlfndr-rating-stars" data-rating="{{hotel.star}}">
+                                        {% if hotel.star == 1%}
+                                        <i class="fa fa-star htlfndr-star-color"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        {% elif hotel.star == 2%}
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        {% elif hotel.star == 3%}
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        {% elif hotel.star == 4%}
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star"></i>
+                                        {% elif hotel.star == 5%}
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        {% endif %}
+                                    </div><!-- .htlfndr-rating-stars -->
+                                    <h5 class="htlfndr-hotel-location"><i class="fa fa-map-marker"></i> {{ hotel.address }}</h5>
+                                </div><!-- .htlfndr-description-content -->
+                                <a class="htlfndr-select-hotel-button" href="{{ hotel.get_absolute_url }}"
+                                   role="button">select</a>
+                                {% if hotel.discount_price %}
+                                <div class="htlfndr-hotel-price"><span class="htlfndr-special">special offer</span>
+                                    <span class="htlfndr-cost" >$ {{ hotel.discount_price }}</span>
+                                </div>
+                                {% else %}
+                                <div class="htlfndr-hotel-price">
+                                    <span class="htlfndr-cost">$ {{ hotel.price }}</span>
+
+                                </div><!-- .htlfndr-hotel-price -->
+                                {% endif %}
+                            </div><!-- .htlfndr-hotel-description -->
+                        </div><!-- .htlfndr-hotel-post -->
+                    </div><!-- .col-md-4.htlfndr-hotel-post-wrapper -->
+                    {% endfor %}
+                    </div>
+                </section>
+
+<!--{% if is_paginated %}-->
+
+<!--    {% if page_obj.has_previous %}-->
+<!--        <a class="btn" href="?page=1">First</a>-->
+<!--        <a class="btn" href="?page={{ page_obj.previous_page_number }}">Previous</a>-->
+
+<!--    {% endif %}-->
+
+<!--    {% for num in page_obj.paginator.page_range %}-->
+<!--        {% if page_obj.number == num %}-->
+<!--            <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>-->
+<!--        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}-->
+<!--            <a class="btn" href="?page={{ num }}">{{ num }}</a>-->
+<!--        {% endif %}-->
+<!--    {% endfor %}-->
+
+<!--    {% if page_obj.has_next %}-->
+<!--        <a class="btn" href="?page={{ page_obj.next_page_number }}">Next</a>-->
+<!--        <a class="btn" href="?page={{ page_obj.paginator.num_pages }}">Last</a>-->
+<!--    {% endif %}-->
+
+<!--{% endif %}-->
+
+<!-- Pagination -->
+{% if is_paginated %}
+    <div class="htlfndr-pagination">
+        {% if page_obj.has_previous %}
+            <a class="btn btn-sm" href="?page=1">First</a>
+            <a class="btn btn-sm fa fa-angle-left" href="?page={{ page_obj.previous_page_number }}"></a>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a class="btn btn-sm" style="color:red" href="?page={{ num }}">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a class="btn btn-sm" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <a class="btn btn-sm fa fa-angle-right" href="?page={{ page_obj.next_page_number }}"></a>
+            <a class="btn btn-sm" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        {% endif %}
+    </div>
+{% endif %}
+<!-- .htlfndr-pagination -->
+
+            </main><!-- .htlfndr-search-result -->
+        </div><!-- .row -->
+    </div><!-- .container -->
+    <!-- End of main content -->
+</div><!-- .htlfndr-wrapper -->
+
+
+{% endblock content %}

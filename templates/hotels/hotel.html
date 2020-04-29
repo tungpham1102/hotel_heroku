@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Hotel{% endblock title %}
+
+{% block style %}
+	<link href="{% static 'css/owl.carousel.css' %}" rel="stylesheet" />
+{% endblock style%}
+
+{% block content %}
+<!-- Overlay preloader-->
+<div class="htlfndr-loader-overlay"></div>
+
+<div class="htlfndr-wrapper">
+	<!-- Start of main content -->
+	<div class="container">
+			<!-- Progress steps -->
+			<div class="htlfndr-steps">
+				<ul class="htlfndr-progress">
+					<li><a href="{% url 'hotels:home' %}">
+						<span class="htlfndr-step-number">1</span> <span class="htlfndr-step-description">home</span></a>
+					</li>
+					<li class="htlfndr-active-step">
+						<span class="htlfndr-step-number">2</span> <span class="htlfndr-step-description">hotel</span>
+					</li>
+					<li>
+						<span class="htlfndr-step-number">3</span> <span class="htlfndr-step-description">book details</span>
+					</li>
+					<li>
+                    <span class="htlfndr-step-number">4</span> <span class="htlfndr-step-description">payment</span>
+                </li>
+				</ul>
+			</div><!-- .htlfndr-steps -->
+
+			<div class="row htlfndr-page-content">
+				<main id="htlfndr-main-content" class="col-sm-12 col-md-8 col-lg-9 post htlfndr-hotel-single-content" role="main">
+					<section id="htlfndr-gallery-and-map-tabs">
+						<ul>
+							<li><a href="#htlfndr-gallery-tab-1">photo</a></li>
+							<li><a href="#htlfndr-gallery-tab-2">map</a></li>
+						</ul>
+						<!-- Start of hotel slider
+						Must be two blocks with same class and same pictures in it -->
+						<div id="htlfndr-gallery-tab-1" class="htlfndr-hotel-gallery">
+
+							<div id="htlfndr-gallery-synced-1" class="htlfndr-gallery-carousel">
+								{% if object.hotelimage_set.all %}
+								{% for img in object.hotelimage_set.all %}
+								<div class="htlfndr-gallery-item">
+									<img src="http://127.0.0.1:8000/{{img.img}}" style="height:565px; witdh:845px;" alt="hotel img"/>
+								</div><!-- .htlfndr-gallery-item -->
+								{% endfor %}
+								{% else %}
+								<div class="htlfndr-gallery-item">
+									<img src="{% static 'media/imghotel/default.jpg' %}" style="height:565px; witdh:845px;" alt="hotel img"/>
+								</div><!-- .htlfndr-gallery-item -->
+								{% endif %}
+							</div><!-- .htlfndr-gallery-synced-1 .htlfndr-hotel-gallery-->
+
+							<div id="htlfndr-gallery-synced-2" class="htlfndr-gallery-carousel">
+								{% if object.hotelimage_set.all %}
+								{% for img in object.hotelimage_set.all%}
+								<div class="htlfndr-gallery-item">
+									<img src="http://127.0.0.1:8000/{{img.img}}" style="height:95px; witdh:140px;" alt="hotel img"/>
+								</div><!-- .htlfndr-gallery-item -->
+								{% endfor %}
+								{% else %}
+								<div class="htlfndr-gallery-item">
+									<img src="{% static 'media/imghotel/default.jpg' %}" style="height:95px; witdh:140px;" alt="hotel img"/>
+								</div><!-- .htlfndr-gallery-item -->
+								{% endif %}
+							</div><!-- .htlfndr-gallery-synced-2 .htlfndr-hotel-gallery-->
+						</div><!-- #htlfndr-gallery-tab-1 .htlfndr-hotel-gallery -->
+						<!-- End of hotel slider -->
+						<div id="htlfndr-gallery-tab-2">
+							<div class="htlfndr-iframe-wrapper">
+								<iframe
+									src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4461.6570805764695!2d-122.42764988684334!3d37.74624140010288!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80859a6d00690021%3A0x4a501367f076adff!2z0KHQsNC9LdCk0YDQsNC90YbQuNGB0LrQviwg0JrQsNC70LjRhNC-0YDQvdC40Y8sINCh0KjQkA!5e0!3m2!1sru!2sua!4v1438339854639"
+									 allowfullscreen></iframe>
+							</div><!-- .htlfndr-iframe-wrapper -->
+						</div><!-- #htlfndr-gallery-tab-2 -->
+					</section><!-- #htlfndr-gallery-and-map-tabs -->
+
+
+				</main><!-- .post .htlfndr-hotel-single-content -->
+
+				<aside id="htlfndr-right-sidebar" class="col-sm-12 col-md-4 col-lg-3 htlfndr-sidebar htlfndr-sidebar-in-right" role="complementary">
+
+					<div class="widget htlfndr-hotel-visit-card">
+						<div class="htlfndr-widget-main-content htlfndr-widget-padding">
+							<div class="htlfndr-hotel-logo">
+								{% if object.hotelimage_set.all %}
+								{% for img in object.hotelimage_set.all %}
+								{% if img.featured %}
+								<img src="http://127.0.0.1:8000/{{img.img}}" style="height:75px; width:105px;" alt="Hotel logo" />
+								{% endif %}
+								{% endfor %}
+								{% else %}
+								<img src="{% static 'media/imghotel/default.jpg' %}" style="height:75px; width:105px;" alt="Hotel logo" />
+								{% endif %}
+							</div><!-- .htlfndr-hotel-logo -->
+							<div class="htlfndr-hotel-description">
+								<h2>{{ object.title }}</h2>
+								<div class="htlfndr-rating-stars">
+									{% if object.star == 1%}
+                                        <i class="fa fa-star htlfndr-star-color"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        {% elif object.star == 2%}
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        {% elif object.star == 3%}
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        {% elif object.star == 4%}
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star"></i>
+                                        {% elif object.star == 5%}
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        <i class="fa fa-star htlfndr-star-color"></i>&nbsp;
+                                        {% endif %}
+								</div> <!-- .htlfndr-rating-stars -->
+								<h5 class="htlfndr-hotel-location"><i class="fa fa-map-marker"></i>  {{ object.address }}</h5>
+							</div><!-- .htlfndr-hotel-description -->
+
+							<div class="htlfndr-hotel-price"><span class="htlfndr-from">from</span> {% if object.discount_price %}<span class="htlfndr-cost">$ {{ object.discount_price }} </span>{% else %}<span class="htlfndr-cost">$ {{ object.price }}</span> {% endif %}<span class="htlfndr-per-night">/ night</span></div> <!-- .htlfndr-hotel-price -->
+
+
+						</div><!-- .htlfndr-widget-main-content -->
+						<a href="{{ object.get_add_booking_url }}" class="htlfndr-book-now-button" role="button">book now</a>
+						<div class="htlfndr-widget-padding">
+							<div class="htlfndr-hotel-contacts">
+								<p class="htlfndr-mail"><a href="mailto:example@mail.com" >{{ object.email }}</a></p>
+								<p class="htlfndr-url"><a href="#">{{object.slug}}.com</a></p>
+								<p class="htlfndr-phone"><a href="#">{{ object.phone }}</a></p>
+								<p class="htlfndr-reviews">123 (Reviews)</p>
+							</div><!-- .htlfndr-hotel-contacts -->
+						</div><!-- .htlfndr-widget-padding -->
+					</div><!-- .widget .htlfndr-hotel-visit-card -->
+				</aside><!-- .htlfndr-sidebar-in-right -->
+			</div><!-- .row .htlfndr-page-content -->
+		</div><!-- .container -->
+	<!-- End of main content -->
+
+</div><!-- .htlfndr-wrapper -->
+
+
+
+{% endblock content %}
+
+{% block script %}
+<script src="{% static 'js/jquery.responsiveTabs.min.js' %}"></script>
+<script src="{% static 'js/jquery.ui.touch-punch.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+{% endblock script %}
